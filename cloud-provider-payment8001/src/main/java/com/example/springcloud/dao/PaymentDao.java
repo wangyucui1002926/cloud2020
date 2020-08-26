@@ -1,7 +1,6 @@
 package com.example.springcloud.dao;
 
 import com.example.springcloud.entities.Payment;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
