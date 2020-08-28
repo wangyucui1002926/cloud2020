@@ -1,4 +1,4 @@
-package com.example.springcloud.controller;
+package com.example.springcloud;
 
 import com.example.springcloud.entities.CommonResult;
 import com.example.springcloud.entities.Payment;

@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
- * @date 8/21/2020 5:35 PM
  * @author yucui.wang
+ * @date 8/21/2020 5:35 PM
  */
 @SpringBootApplication
 @MapperScan("com.example.springcloud.dao")
