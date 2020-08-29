@@ -1,17 +1,14 @@
-package com.example.springcloud;
+package com.example.springcloud.controller;
 
 import com.example.springcloud.entities.CommonResult;
 import com.example.springcloud.entities.Payment;
 import com.example.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description TODO
@@ -28,9 +25,6 @@ public class PaymentController {
     @Value("${server.port}")
     private String serverPort;
 
-    @Resource
-    DiscoveryClient discoveryClient;
-
     @PostMapping(value = "/payment/create")
     public CommonResult create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
@@ -46,7 +40,7 @@ public class PaymentController {
     @GetMapping(value = "/payment/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
-        log.info("****插入结果:" + payment);
+        log.info("****查询结果:" + payment);
 
         if (payment != null) {
             return new CommonResult(200, "查询成功,serverPort: " + serverPort, payment);
@@ -55,24 +49,15 @@ public class PaymentController {
         }
     }
 
-    @GetMapping(value = "" +
-            "" +
-            "" +
-            "")
-    public Object discovery() {
-        List<String> services = discoveryClient.getServices();
-        for (String service : services) {
-            log.info("*********service" + service);
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            return serverPort;
         }
-        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
-        for (ServiceInstance instance : instances) {
-            log.info(instance.getServiceId() +
-                    "\t" + instance.getInstanceId() +
-                    "\t" + instance.getHost() +
-                    "\t" + instance.getPort() +
-                    "\t" + instance.getUri());
-        }
-        return discoveryClient;
     }
 }
 

@@ -1,8 +1,9 @@
-package com.example.springcloud;
+package com.example.springcloud.controller;
 
 import com.example.springcloud.entities.CommonResult;
 import com.example.springcloud.entities.Payment;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 public class OrderController {
-//    public static final String PAYMENT_URL = "http://localhost:8001";
+    //    public static final String PAYMENT_URL = "http://localhost:8001";
     public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
 
     @Resource
@@ -31,6 +32,12 @@ public class OrderController {
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
+    }
+
+    @GetMapping("/consumer/payment/getEntity/{id}")
+    public ResponseEntity<Payment> getPaymentEntity(@PathVariable("id") Long id) {
+        ResponseEntity<Payment> entity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, Payment.class);
+        return entity;
     }
 
 
