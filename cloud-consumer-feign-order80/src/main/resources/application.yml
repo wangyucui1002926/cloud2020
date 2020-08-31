@@ -6,7 +6,7 @@ eureka:
     register-with-eureka: false
     #fetch-registry：设置为false的话，则不会去服务中心拉取服务，导致找不到服务端
     fetch-registry: true
-    service-url:
+    service-url:http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
 
 #设置feign客户端超时时间（OpenFeign默认支持ribbon）
